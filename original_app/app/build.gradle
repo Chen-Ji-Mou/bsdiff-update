@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+}
+
+def projectName = 'original_app'
+def projectRootPath = project.rootDir.absolutePath.replace(projectName,'')
+
+android {
+    signingConfigs {
+        release {
+            storeFile file("$projectRootPath/signature.jks")
+            storePassword '123456'
+            keyAlias 'release'
+            keyPassword '123456'
+        }
+    }
+    compileSdk 32
+    defaultConfig {
+        applicationId "com.example.chenjimou"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+        signingConfig signingConfigs.release
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    android.applicationVariants.all { variant ->
+        // 打包名称
+        def apkName = "original-app-${variant.buildType.name}.apk"
+        // 打包输出路径
+        def outputApkDir = "$projectRootPath/outputs"
+        // 更改输出的apk名称
+        variant.outputs.forEach {
+            it.outputFileName = apkName
+        }
+        // 打包完成后将apk复制到指定文件夹
+        variant.assemble.doLast {
+            File out = new File(outputApkDir)
+            copy {
+                variant.outputs.forEach { file ->
+                    copy {
+                        from file.outputFile
+                        into out
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.5.0'
+}
