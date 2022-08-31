@@ -9,9 +9,7 @@ rm -rf $ROOT/outputs
 mkdir $ROOT/outputs
 
 cd $ROOT/original_app
-$ROOT/original_app/gradlew.bat --parallel assembleRelease
-cd -
+$ROOT/original_app/gradlew --parallel assembleRelease
 
 cd $ROOT/new_app
-$ROOT/new_app/gradlew.bat --parallel assembleRelease
-cd -
+$ROOT/new_app/gradlew --parallel assembleRelease
