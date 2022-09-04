@@ -1,5 +1,3 @@
-# IncrementalUpdate
-
 ## 前置环境搭建
 - Windows
   - adb
