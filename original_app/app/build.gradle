@@ -21,7 +21,19 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        ndkVersion "25.1.8937393"
         signingConfig signingConfigs.release
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang"
+                cFlags "-D__STDC_FORMAT_MACROS"
+                cppFlags "-fexceptions", "-frtti"
+            }
+        }
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
     buildTypes {
         release {
@@ -59,9 +71,17 @@ android {
             }
         }
     }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
+    }
 }
 
 dependencies {
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

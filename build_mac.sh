@@ -19,3 +19,15 @@ if ! which bsdiff >/dev/null; then
 fi
 
 bsdiff $ROOT/outputs/original-app-release.apk $ROOT/outputs/new-app-release.apk $ROOT/outputs/patch
+
+ftp -n 43.143.169.6 << EOF
+user ubuntu Chenjimou1*
+quote pasv
+delete patch
+put $ROOT/outputs/patch
+quit
+EOF
+
+adb install -r $ROOT/outputs/original-app-release.apk
+
+done
