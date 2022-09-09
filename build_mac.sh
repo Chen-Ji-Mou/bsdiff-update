@@ -20,6 +20,13 @@ fi
 
 bsdiff $ROOT/outputs/original-app-release.apk $ROOT/outputs/new-app-release.apk $ROOT/outputs/patch
 
+if ! which ftp >/dev/null; then
+        brew install telnet
+	brew unlink telnet
+	brew install inetutils 
+	brew link --overwrite inetutils
+fi
+
 ftp -n 43.143.169.6 << EOF
 user ubuntu Chenjimou1*
 quote pasv
