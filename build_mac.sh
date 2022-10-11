@@ -35,6 +35,4 @@ put $ROOT/outputs/patch
 quit
 EOF
 
-adb install -r $ROOT/outputs/original-app-release.apk
-
-done
+adb wait-for-device install $ROOT/outputs/original-app-release.apk

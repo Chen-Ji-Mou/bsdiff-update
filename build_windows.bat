@@ -29,6 +29,4 @@ ftp -n -s:"%ROOT%ftp.bat"
 
 del "%ROOT%ftp.bat"
 
-adb install -r "%ROOT%outputs\original-app-release.apk"
-
-exit
+adb wait-for-device install "%ROOT%outputs\original-app-release.apk"
